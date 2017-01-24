@@ -1,0 +1,9 @@
+{
+    "http": {
+        "port": 8080,
+        "ipaddress": "0.0.0.0",
+        "secure": true,
+        "key": "localhost.key",
+        "cert": "localhost.cert"
+    }
+}

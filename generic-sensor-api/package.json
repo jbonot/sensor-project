@@ -1,0 +1,17 @@
+{
+  "name": "generic-sensor-api",
+  "version": "1.0.0",
+  "description": "Generic Sensor API",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [
+    "javascript",
+    "webofthings",
+    "sensors"
+  ],
+  "author": "Philip Ackermann",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^3.0.1"
+  }
+}

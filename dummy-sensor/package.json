@@ -1,0 +1,23 @@
+{
+  "name": "dummy-sensor",
+  "version": "1.0.0",
+  "description": "A dummy sensor implementation",
+  "main": "index.js",
+  "scripts": {},
+  "dependencies": {
+    "generic-sensor-api": "1.0.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-istanbul": "^1.1.1",
+    "gulp-mocha": "^3.0.1",
+    "mocha": "^3.2.0"
+  },
+  "keywords": [
+    "javascript",
+    "webofthings",
+    "sensors"
+  ],
+  "author": "Philip Ackermann",
+  "license": "MIT"
+}

@@ -1,0 +1,30 @@
+<% include include/header.html %>
+
+<table class="table table-striped">
+    <tr>
+        <th>
+            HTTP status
+        </th>
+        <td>
+            <%= status %>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Request path
+        </th>
+        <td>
+            <%= request.path %>
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Message
+        </th>
+        <td>
+            <%= error.message %>
+        </td>
+    </tr>
+</table>
+
+<% include include/footer.html %>

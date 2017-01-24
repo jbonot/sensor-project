@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title><%= pkg.name %> :: <%= header %></title>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="/images/favicon.ico" type="image/x-icon" rel="shortcut icon">
+	<link href="/css/main.css" type="text/css" rel="stylesheet">
+</head>
+<body>
+    <% var menu = [
+        { name : "index", title : "Home", glyphicon: "fa-home" },
+        { name : "system", title : "System", glyphicon: "fa-signal" },
+        { name : "license", title : "License", glyphicon: "fa-file-text" },
+        { name : "error", title : "Error", glyphicon: "fa-exclamation" } ];
+    %>
+    <nav class="navbar navbar-full navbar-fixed-top navbar-dark bg-primary">
+        <div class="hidden-sm-up">
+            <span class="navbar-brand">express4-skeleton</span>
+            <button class="navbar-toggler pull-xs-right" type="button"
+                    data-toggle="collapse" data-target="#cnavbar">&#9776;</button>
+        </div>
+        <div class="collapse navbar-toggleable-xs container" id="cnavbar">
+            <ul class="nav navbar-nav">
+                <% for (var i = 0; i < menu.length; i++) { %>
+                <% if (menu[i].name === menu_name) { %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#"><span
+                            class="fa <%= menu[i].glyphicon %>"
+                            aria-hidden="true"></span>&nbsp;&nbsp;<%= menu[i].title %>
+                            <span class="sr-only">(current)</span></a>
+                </li>
+                <% } else { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/<%= menu[i].name %>.html"><span
+                            class="fa <%= menu[i].glyphicon %>"
+                            aria-hidden="true"></span>&nbsp;&nbsp;<%= menu[i].title %></a></li>
+                <% } } %>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <main id="main" role="main">
+            <section>
+                <article>
+                    <header role="banner">
+                        <h1><%= header %></h1>
+                    </header>

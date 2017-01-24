@@ -1,0 +1,44 @@
+/* ===== import bootstrap ===== */
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css");
+/* ===== Fonts ===== */
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700italic,700,800,800italic&subset=latin,latin-ext");
+@import url("https://fonts.googleapis.com/css?family=Source+Code+Pro:400,200,300,500,600,700,900&subset=latin,latin-ext");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
+
+/* ===== custom styles ===== */
+body {
+    padding-top: 70px; /* fixed header */
+    font-family: "Open Sans", arial, sans-serif;
+}
+
+main {
+    min-height: 30rem;
+}
+
+footer {
+    text-align: center;
+}
+
+footer address {
+    background-color: inherit;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    font-style: italic;
+    height: auto;
+    margin: 1rem 0;
+}
+
+@media all {
+    .nav-item {
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+@media (max-width: 34em) {
+    .nav-item {
+        width: 100%;
+        text-align: center;
+    }
+}
