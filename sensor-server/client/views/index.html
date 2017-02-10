@@ -1,11 +1,70 @@
 <% include include/header.html %>
-
-<div class="jumbotron">
-    <h2><%= pkg.name %></h2>
-    <p>This is just an example <a href="http://expressjs.com/">Express.js</a> web
-        application skeleton targeted to demonstrate some of the facilities offered by the
-        framework. Additionally, it is integrated with a barebones version of
-        <a href="http://getbootstrap.com/">Bootstrap</a>.</p>
+<div class="col-md-2"></div>
+<div class="dashboard col-md-8">
+<div class="row">
+  <div class="col-md-6">
+      <h3>Humidity Sensor</h3>
+      <div class="input-group">
+          <label for="humidity-name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="humidity-name">
+          </div>
+      </div>
+      <div class="input-group">
+          <label for="humidity-id" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="humidity-id">
+          </div>
+      </div>
+  </div>
+  <div class="col-md-6">
+      <h3>Temperature Sensor</h3>
+      <div class="input-group">
+          <label for="temperature-name" class="col-sm-2 control-label">Name</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="temperature-name">
+          </div>
+      </div>
+      <div class="input-group">
+          <label for="temperature-id" class="col-sm-2 control-label">ID</label>
+          <div class="col-sm-10">
+              <input type="text" class="form-control" id="temperature-id">
+          </div>
+      </div>
+  </div>
 </div>
+<div class="row">
 
+<div class="col-md-6">
+    <h3>Ambient Light Sensor</h3>
+    <div class="input-group">
+        <label for="light-name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="light-name">
+        </div>
+    </div>
+    <div class="input-group">
+        <label for="light-id" class="col-sm-2 control-label">ID</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="light-id">
+        </div>
+    </div>
+</div>
+<div class="col-md-6">
+    <h3>Sound Intensity Sensor</h3>
+    <div class="input-group">
+        <label for="sound-name" class="col-sm-2 control-label">Name</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="sound-name">
+        </div>
+    </div>
+    <div class="input-group">
+        <label for="sound-id" class="col-sm-2 control-label">ID</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="sound-id">
+        </div>
+    </div>
+</div>
+</div>
+</div>
 <% include include/footer.html %>

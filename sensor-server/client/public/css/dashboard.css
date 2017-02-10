@@ -1,0 +1,13 @@
+/*
+ * Custom CSS for the sensor dashboard
+ *
+ * @author Jeanine Bonot <jeanine.bonot@rwth-aachen.de
+ */
+
+.dashboard .row {
+  margin-top: 2em;
+}
+
+.dashboard .input-group {
+  margin-top: 1em;
+}
