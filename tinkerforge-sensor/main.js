@@ -1,12 +1,12 @@
 'use strict';
-const DummySensor = require('./lib/DummySensor');
+const TinkerForgeSensor = require('./lib/TinkerForgeSensor');
 
-let sensor = new DummySensor({
+let sensor = new TinkerForgeSensor({
   frequency: 500
 });
 sensor.onactivate = event => console.log('activated');
 sensor.onchange = event => console.log(
-  `${new Date(event.reading.timestamp).toLocaleTimeString()} ${event.reading.dummyValue}`
+  `${new Date(event.reading.timestamp).toLocaleTimeString()} ${event.reading.inputValue}`
 );
 sensor.start();
 setTimeout(

@@ -1,7 +1,7 @@
 {
-  "name": "dummy-sensor",
+  "name": "tinkerforge-sensor",
   "version": "1.0.0",
-  "description": "A dummy sensor implementation",
+  "description": "A TinkerForge sensor implementation",
   "main": "index.js",
   "scripts": {},
   "dependencies": {
@@ -18,6 +18,6 @@
     "webofthings",
     "sensors"
   ],
-  "author": "Philip Ackermann",
+  "author": "Lavinia Banu and Jeanine Bonot",
   "license": "MIT"
 }

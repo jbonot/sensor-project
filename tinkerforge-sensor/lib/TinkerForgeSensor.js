@@ -1,9 +1,9 @@
 'use strict';
 
 const Sensor = require('generic-sensor-api').Sensor;
-const DummySensorReading = require('./DummySensorReading');
+const TinkerForgeSensorReading = require('./TinkerForgeSensorReading');
 
-module.exports = class DummySensor extends Sensor {
+module.exports = class TinkerForgeSensor extends Sensor {
 
   constructor(sensorOptions) {
     super(sensorOptions);
@@ -14,12 +14,12 @@ module.exports = class DummySensor extends Sensor {
     return new Promise((resolve, reject) => {
       this._intervalHandle = setInterval(
           () => {
-              let dummySensorReading = new DummySensorReading(
+              let tinkerForgeSensorReading = new TinkerForgeSensorReading(
                   Date.now(),
                   Math.random()
               )
               this.onchange({
-                  reading: dummySensorReading
+                  reading: tinkerForgeSensorReading
               });
           },
           this.sensorOptions.frequency

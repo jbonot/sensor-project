@@ -18,12 +18,12 @@ gulp.task('test-coverage', ['pre-test-coverage'], function () {
 
 gulp.task('test', () =>
   gulp
-    .src('./test/DummySensorTest.js', {read: false})
+    .src('./test/TinkerForgeSensorTest.js', {read: false})
     .pipe(mocha({reporter: 'spec', timeout: 5000}))
 );
 
 gulp.task('default', () =>
   gulp
-    .src('./test/DummySensorTest.js', {read: false})
+    .src('./test/TinkerForgeSensorTest.js', {read: false})
     .pipe(mocha({reporter: 'spec', timeout: 5000}))
 );
