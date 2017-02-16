@@ -6,7 +6,7 @@ const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
 
 let sensors = new Map();
-for(let i=0; i<10; i++) {
+for(let i=0; i<4; i++) {
   let sensor = new DummySensor({
     frequency: 2000
   });
