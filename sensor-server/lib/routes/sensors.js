@@ -3,11 +3,11 @@
 const uuid = require("uuid");
 const httpError = require("http-errors");
 const http = require("http");
-const TinkerForgeSensor = require("tinkerforge-sensor").TinkerForgeSensor;
+const DummySensor = require("dummy-sensor").DummySensor;
 
 let sensors = new Map();
 for(let i=0; i<10; i++) {
-  let sensor = new TinkerForgeSensor({
+  let sensor = new DummySensor({
     frequency: 2000
   });
   sensor.onchange = event => sensor.reading = event.reading;
