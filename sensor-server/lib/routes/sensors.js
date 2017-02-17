@@ -6,8 +6,9 @@ const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
 
 let sensors = new Map();
+let name = "foo";
 for(let i=0; i<10; i++) {
-  let sensor = new DummySensor({
+  let sensor = new DummySensor(name, {
     frequency: 2000
   });
   sensor.onchange = event => sensor.reading = event.reading;
@@ -18,9 +19,15 @@ Array
     .from(sensors.entries())
     .forEach(entry => entry[1].start());
 
-let sensorsResponse = Array
+/* let sensorsResponse = Array
   .from(sensors.keys())
-  .map(id => ({id: id}));
+  .map(id => ({id: id})); */
+
+let sensorsResponse = new Map();
+
+for (var [id, sensor] of sensors.entries()) {
+  sensorsResponse.set(id, sensor.name);
+}
 
 module.exports = class Sensors
 {
@@ -33,7 +40,8 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-                        response.status(200).json({ "sensors": sensorsResponse });
+                        response.status(200).json({ "sensors": Array.from(sensorsResponse.entries())});
+                        console.log(sensors.entries());
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
