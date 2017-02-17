@@ -98,6 +98,43 @@ module.exports = class Sensors
         }
     }
 
+    static latestReading (request, response, next)
+    {
+        let sensor = sensors.get(request.params.sensor);
+
+        let sensorResponse = {
+          id: sensor.id,
+          reading: sensor.reading
+        }
+        switch (request.method)
+        {
+            case "GET":
+                response.format(
+                {
+                    "application/json": () =>
+                    {
+                        console.log(sensorResponse.reading);
+                        let latest = new Array();
+                        latest.push(sensorResponse.reading.dummyValue);
+                        response.status(200).type("application/json").send({"latest-value": latest});
+                    },
+                    "default": () => { next(new httpError.NotAcceptable()); }
+                });
+                break;
+            case "DELETE":
+            case "PUT":
+            case "CONNECT":
+            case "HEAD":
+            case "OPTIONS":
+            case "POST":
+            case "TRACE":
+            default:
+                response.set("allow", "GET, POST");
+                next(new httpError.MethodNotAllowed());
+                break;
+        }
+    }
+
     static _404 (request, response)
     {
         response.status(404).json({ "error": http.STATUS_CODES[404] })

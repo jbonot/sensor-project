@@ -1,6 +1,8 @@
 'use strict';
 const SensorReading = require('generic-sensor-api').SensorReading;
 
+// Different readings for different types of sensors.
+
 module.exports = class DummySensorReading extends SensorReading {
   constructor(timestamp, value) {
     super(timestamp);

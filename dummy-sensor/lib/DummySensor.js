@@ -21,12 +21,12 @@ module.exports = class DummySensor extends Sensor {
     return new Promise((resolve, reject) => {
       this._intervalHandle = setInterval(
           () => {
-              let dummySensorReading = new DummySensorReading(
+                  this._reading = new DummySensorReading(
                   Date.now(),
                   Math.random()
               )
               this.onchange({
-                  reading: dummySensorReading
+                  reading: this._reading
               });
           },
           this.sensorOptions.frequency

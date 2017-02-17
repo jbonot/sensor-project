@@ -16,6 +16,8 @@ module.exports = class APIRouter extends require("express").Router
             parser.json({ "inflate": true, "strict": true }), Users.createStorageDirectory, Users.users);
 
 
+        this.all("/sensors/:sensor/sensorReadings/latest", DefaultRouter.xPoweredBy,
+            parser.json({ "inflate": true, "strict": true }), Sensors.latestReading);
         this.all("/sensors/:sensor", DefaultRouter.xPoweredBy,
             parser.json({ "inflate": true, "strict": true }), Sensors.sensor);
         this.all("/sensors", DefaultRouter.xPoweredBy,
