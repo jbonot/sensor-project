@@ -4,8 +4,8 @@ const uuid = require('uuid/v1');
 const SensorState = require('./SensorState');
 
 module.exports = class Sensor {
-  constructor(sensorOptions) {
-    this._id = uuid();
+  constructor(seed, sensorOptions) {
+    this._id = 100 * seed + "-" + seed * 1000;
     this._sensorOptions = sensorOptions || {};
     if(this.sensorOptions.frequency === 'undefined') {
       this.sensorOptions.frequency = 500;
@@ -16,9 +16,10 @@ module.exports = class Sensor {
     this._onchange = event => {};
     this._onerror = event => {};
   }
+  /*
   set id(value) {
     this._id = value;
-  }
+  } */
   get id() {
     return this._id;
   }

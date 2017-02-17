@@ -6,14 +6,18 @@ const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
 
 let sensors = new Map();
+let names = new Array("Humidity Sensor", "Temperature Sensor", "Ambient Light Sensor",
+    "Sound Intensity Sensor");
 
 for(let i=0; i<4; i++) {
-  let sensor = new DummySensor(name, {
+  let sensor = new DummySensor(i+10, {
     frequency: 2000
   });
   sensor.onchange = event => sensor.reading = event.reading;
+  sensor.name = names[i];
   sensors.set(sensor.id, sensor);
 }
+
 
 Array
     .from(sensors.entries())
@@ -23,7 +27,7 @@ Array
   .from(sensors.keys())
   .map(id => ({id: id})); */
 
-let sensorsResponse = new Map();
+const sensorsResponse = new Map();
 
 for (var [id, sensor] of sensors.entries()) {
   sensorsResponse.set(id, sensor.name);
@@ -63,6 +67,7 @@ module.exports = class Sensors
     static sensor (request, response, next)
     {
         let sensor = sensors.get(request.params.sensor);
+
         let sensorResponse = {
           id: sensor.id,
           reading: sensor.reading

@@ -5,10 +5,9 @@ const DummySensorReading = require('./DummySensorReading');
 
 module.exports = class DummySensor extends Sensor {
 
-  constructor(name, sensorOptions) {
+  constructor(sensorOptions) {
     super(sensorOptions);
     this._intervalHandle = null;
-    this._name = name;
   }
 
   set name(value) {
