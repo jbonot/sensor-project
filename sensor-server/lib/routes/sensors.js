@@ -8,6 +8,19 @@ const DummySensor = require("dummy-sensor").DummySensor;
 let sensors = new Map();
 let names = new Array("Humidity Sensor", "Temperature Sensor", "Ambient Light Sensor",
     "Sound Intensity Sensor");
+let humidityFormula = function() {
+  return (Math.random() * 25) % 100;
+};
+let temperatureFormula = function() {
+  return (Math.random() * 25) % 100;
+};
+let lightFormula = function() {
+  return (Math.random() * 25) % 100;
+};
+let soundFormula = function() {
+  return (Math.random() * 25) % 100;
+};
+let formulas = new Array(humidityFormula, temperatureFormula, lightFormula, soundFormula);
 
 for(let i=0; i<4; i++) {
   let sensor = new DummySensor(i+10, {
@@ -15,6 +28,8 @@ for(let i=0; i<4; i++) {
   });
   sensor.onchange = event => sensor.reading = event.reading;
   sensor.name = names[i];
+  sensor.formula = formulas[i];
+
   sensors.set(sensor.id, sensor);
 }
 
@@ -29,7 +44,7 @@ Array
 
 const sensorsResponse = new Map();
 
-for (var [id, sensor] of sensors.entries()) {
+for (let [id, sensor] of sensors.entries()) {
   sensorsResponse.set(id, sensor.name);
 }
 
@@ -104,7 +119,7 @@ module.exports = class Sensors
 
         let sensorResponse = {
           id: sensor.id,
-          reading: sensor.reading
+          reading: sensor.reading.dummyValue
         }
         switch (request.method)
         {
@@ -113,9 +128,8 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-                        console.log(sensorResponse.reading);
                         let latest = new Array();
-                        latest.push(sensorResponse.reading.dummyValue);
+                        latest.push(sensorResponse.reading);
                         response.status(200).type("application/json").send({"latest-value": latest});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }

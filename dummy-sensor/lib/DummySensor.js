@@ -17,13 +17,27 @@ module.exports = class DummySensor extends Sensor {
     return this._name;
   }
 
+  set startValue(value) {
+    this._startValue = value;
+  }
+  get startValue() {
+    return this._startValue;
+  }
+
+  set formula(value) {
+    this._formula = value;
+  }
+  get formula() {
+    return this._formula;
+  }
+
   handleStarted() {
     return new Promise((resolve, reject) => {
       this._intervalHandle = setInterval(
           () => {
                   this._reading = new DummySensorReading(
                   Date.now(),
-                  Math.random()
+                  this._formula()
               )
               this.onchange({
                   reading: this._reading
