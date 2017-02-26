@@ -42,10 +42,10 @@ Array
   .from(sensors.keys())
   .map(id => ({id: id})); */
 
-const sensorsResponse = new Map();
+const sensorsResponse = new Object();
 
 for (let [id, sensor] of sensors.entries()) {
-  sensorsResponse.set(id, sensor.name);
+  sensorsResponse[id] = sensor.name;
 }
 
 module.exports = class Sensors
@@ -59,8 +59,8 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-                        response.status(200).json({ "sensors": Array.from(sensorsResponse.entries())});
-                        console.log(sensors.entries());
+                        response.status(200).type("application/json").send(sensorsResponse)
+                      //  response.status(200).json({ "sensors": sensorsResponse});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });

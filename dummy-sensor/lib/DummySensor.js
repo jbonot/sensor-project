@@ -36,8 +36,9 @@ module.exports = class DummySensor extends Sensor {
       this._intervalHandle = setInterval(
           () => {
                   this._reading = new DummySensorReading(
-                  Date.now(),
-                  this._formula()
+                    this._name,
+                    Date.now(),
+                    this._formula()
               )
               this.onchange({
                   reading: this._reading
