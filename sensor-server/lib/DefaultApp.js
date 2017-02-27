@@ -106,7 +106,34 @@ module.exports = class DefaultApp
         const ipaddress = this.config["http"]["ipaddress"];
         const port = this.config["http"]["port"];
 
-        let server = null;
+        const express = require('express');
+        const http = require('http');
+        const url = require('url');
+        const WebSocket = require('ws');
+
+        // Sets up and starts the WebSocket server.
+        // This server instance is responsible for feeding realtime sensor readings
+        // to its clients. (See config file for more details).
+        // Running on 8081.
+        const app = express();
+        const server = http.createServer(app);
+        const wss = new WebSocket.Server({ server });
+
+        wss.on('connection', function (wss) {
+          console.log("Client connected!");
+          // TODO @lavinia: Send sensor readings to the client.
+        });
+
+        let realtimePort = this.config["http"]["realtime-server-port"];
+        server.timeout = 10000;
+        server.listen(realtimePort, ipaddress, () => {
+            console.info(`${this.app.locals.pkg["name"]} [worker ${this.app.locals.worker.id}] started at ${new Date()}. IP address: ${ipaddress}, port: ${realtimePort}`);
+        });
+
+
+        // Sets up and starts the server responsible for the REST request handling.
+        // Running on 8080. (See config file for more details).
+        let server2 = null;
         if(this.config["http"]["secure"])
         {
             let kf = path.join(this.config.basedir, "config", "certs",
@@ -122,15 +149,15 @@ module.exports = class DefaultApp
                 "key": fs.readFileSync(kf),
                 "cert": fs.readFileSync(cf)
             };
-            server = require("https").createServer(options, this.app);
+            server2 = require("https").createServer(options, this.app);
         }
         else
         {
-            server = require("http").createServer(this.app);
+            server2 = require("http").createServer(this.app);
         }
-        server.timeout = 10000;
-        server.listen(port, ipaddress, () => {
+        server2.timeout = 10000;
+        server2.listen(port, ipaddress, () => {
             console.info(`${this.app.locals.pkg["name"]} [worker ${this.app.locals.worker.id}] started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
         });
-    }
+  }
 };

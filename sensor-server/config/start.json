@@ -1,6 +1,7 @@
 {
     "http": {
         "port": 8080,
+        "realtime-server-port": 8081,
         "ipaddress": "0.0.0.0",
         "secure": true,
         "key": "localhost.key",

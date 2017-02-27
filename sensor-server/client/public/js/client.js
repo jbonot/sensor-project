@@ -30,3 +30,13 @@ xhttp.onreadystatechange = function() {
 // TODO: @lavinia don't hardcode the url. Fix this.
 xhttp.open("GET", "https://localhost:8080/api/sensors", true);
 xhttp.send();
+
+
+
+// Sensor readings feed in realtime.
+// TODO: @lavinia fix harcoded address.
+var socket = new WebSocket("ws://localhost:8081");
+socket.onmessage=function(event) {
+    var data = JSON.parse(event.data);
+    console.log(data.message);
+};
