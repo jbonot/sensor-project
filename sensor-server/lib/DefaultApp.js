@@ -28,6 +28,7 @@ module.exports = class DefaultApp
             pkg: pkg,
             public: path.join(config.basedir, "client", "public"),
             users: path.join(os.tmpdir(), pkg.name, "users"),
+            sensors: config.sensors,
             favicon: path.join(config.basedir, "client", "public", "images", "favicon.ico"),
             worker: worker,
             logger: debug

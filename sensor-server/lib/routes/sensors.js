@@ -5,53 +5,36 @@ const httpError = require("http-errors");
 const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
 
-let sensors = new Map();
-let names = new Array("Humidity Sensor", "Temperature Sensor", "Ambient Light Sensor",
-    "Sound Intensity Sensor");
-let humidityFormula = function() {
-  return (Math.random() * 25) % 100;
-};
-let temperatureFormula = function() {
-  return (Math.random() * 25) % 100;
-};
-let lightFormula = function() {
-  return (Math.random() * 25) % 100;
-};
-let soundFormula = function() {
-  return (Math.random() * 25) % 100;
-};
-let formulas = new Array(humidityFormula, temperatureFormula, lightFormula, soundFormula);
-
-for(let i=0; i<4; i++) {
-  let sensor = new DummySensor(i+10, {
-    frequency: 2000
-  });
-  sensor.onchange = event => sensor.reading = event.reading;
-  sensor.name = names[i];
-  sensor.formula = formulas[i];
-
-  sensors.set(sensor.id, sensor);
-}
 
 
-Array
-    .from(sensors.entries())
-    .forEach(entry => entry[1].start());
+// Here only reder static data about the sensors, based on the json file.
+
+// let sensors = new Map();
+
+
 
 /* let sensorsResponse = Array
   .from(sensors.keys())
   .map(id => ({id: id})); */
 
-const sensorsResponse = new Object();
 
-for (let [id, sensor] of sensors.entries()) {
-  sensorsResponse[id] = sensor.name;
+
+function getSensorResponse(sensors) {
+  let sensorsResponse = new Object();
+
+  for (let [id, sensor] of sensors.entries()) {
+    sensorsResponse[id] = sensor.name;
+  }
+  return sensorsResponse;
 }
 
 module.exports = class Sensors
 {
     static sensors (request, response, next)
     {
+        let sensors = request.app.locals.sensors;
+        const sensorsResponse = getSensorResponse(sensors);
+        //new Object();
         switch (request.method)
         {
             case "GET":
@@ -81,6 +64,7 @@ module.exports = class Sensors
 
     static sensor (request, response, next)
     {
+        let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
 
         let sensorResponse = {
@@ -115,6 +99,7 @@ module.exports = class Sensors
 
     static latestReading (request, response, next)
     {
+        let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
 
         let sensorResponse = {

@@ -65,6 +65,11 @@ process.on("uncaughtException", function (error)
 
 function launcher(worker, pkg, config)
 {
+    const createSensors = require("./lib/ServerSensors");
+    let sensors = createSensors();
+    // console.log(serverSensors);
+    config.sensors = sensors;
+
     const app = new (require("./lib/DefaultApp"))(worker, pkg, config);
     worker.process.title = `${pkg.name}:${worker.id}`;
     app.start();
