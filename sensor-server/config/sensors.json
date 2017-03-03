@@ -1,0 +1,18 @@
+{
+    "humidity": {
+        "name": "Humidity Sensor",
+        "id": "3867-f9-71d2-b1ce-61-fc83"
+    },
+    "temperature": {
+        "name": "Temperature Sensor",
+        "id": "0d84-35-4e04-8ed4-ce-3131"
+    },
+    "light": {
+        "name": "Ambient Light Sensor",
+        "id": "cf35-f5-8663-60a5-69-5535"
+    },
+    "sound": {
+        "name": "Sound Intensity Sensor",
+        "id": "bca4-89-445a-81e5-87-f7af"
+    }
+}
