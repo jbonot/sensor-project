@@ -3,7 +3,6 @@
 const DummySensor = require("dummy-sensor").DummySensor;
 
 module.exports = function createSensors() {
-  console.log("Creating sensors!");
   let names = new Array("Humidity Sensor", "Temperature Sensor", "Ambient Light Sensor",
       "Sound Intensity Sensor");
   let humidityFormula = function() {
@@ -36,6 +35,5 @@ module.exports = function createSensors() {
       .from(sensors.entries())
       .forEach(entry => entry[1].start());
 
-  console.log(sensors);
   return sensors;
 };
