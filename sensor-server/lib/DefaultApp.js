@@ -1,9 +1,7 @@
 "use strict";
 
-module.exports = class DefaultApp
-{
-    constructor(worker, pkg, config)
-    {
+module.exports = class DefaultApp {
+    constructor(worker, pkg, config) {
         const compress = require("compression");
         const ejs = require("ejs");
         const express = require("express");
@@ -43,24 +41,27 @@ module.exports = class DefaultApp
 
         /* ===== Define log stream ===== */
         const logdir = path.join(os.homedir(), ".logs");
-        try
-        {
+        try {
             fs.accessSync(logdir);
-        }
-        catch (error)
-        {
+        } catch (error) {
             debug(error.message);
             debug(`Creating new directory: ${logdir}`);
             mkdirp.sync(logdir)
         }
         const access = fs.createWriteStream(
-            path.join(logdir, "access_" + worker.id + ".log"),
-            { flags: "a" }
+            path.join(logdir, "access_" + worker.id + ".log"), {
+                flags: "a"
+            }
         );
-        app.use(morgan("combined", { "stream": access }));
+        app.use(morgan("combined", {
+            "stream": access
+        }));
 
         /* ===== Compression ===== */
-        app.use(compress({  "threshold": 32, "chunkSize": 16 * 1024 }));
+        app.use(compress({
+            "threshold": 32,
+            "chunkSize": 16 * 1024
+        }));
 
         /* ===== Static ===== */
         app.use(express.static(app.locals.public));
@@ -68,7 +69,9 @@ module.exports = class DefaultApp
 
         /* ===== Sessions ===== */
         app.use(session({
-            "genid": (req) => { return uuid.v1(); },
+            "genid": (req) => {
+                return uuid.v1();
+            },
             "name": "sid",
             "resave": false,
             "saveUninitialized": true,
@@ -100,68 +103,65 @@ module.exports = class DefaultApp
         this.config = config;
     }
 
-    start()
-    {
+    start() {
         const fs = require("fs");
         const path = require("path");
         const ipaddress = this.config["http"]["ipaddress"];
         const port = this.config["http"]["port"];
 
-        // Sets up and starts the server responsible for the REST request handling.
-        // Running on 8080. (See config file for more details).
-        let server = null;
-        if(this.config["http"]["secure"])
-        {
-            let kf = path.join(this.config.basedir, "config", "certs",
-                this.config["http"]["key"]);
-            let cf = path.join(this.config.basedir, "config", "certs",
-                this.config["http"]["cert"]);
-            if(!fs.existsSync(kf) || !fs.existsSync(cf))
-            {
-                throw new Error("HTTP certificate file not found.");
-            }
-            let options =
-            {
-                "key": fs.readFileSync(kf),
-                "cert": fs.readFileSync(cf)
-            };
-            server = require("https").createServer(options, this.app);
-        }
-        else
-        {
-            server = require("http").createServer(this.app);
-        }
-
-
-        //const express = require('express');
-        //const http = require('http');
-        //const url = require('url');
+        const express = require('express');
+        const http = require('http');
+        const url = require('url');
         const WebSocket = require('ws');
 
         // Sets up and starts the WebSocket server.
         // This server instance is responsible for feeding realtime sensor readings
         // to its clients. (See config file for more details).
         // Running on 8081.
-        // const app = express();
-        // const server = http.createServer(app);
-        const wss = new WebSocket.Server({ server });
-
-        wss.on('connection', function (wss) {
-          console.log("Client connected!");
-          // TODO @lavinia: Send sensor readings to the client.
-          // ws.send("reading");
+        const app = express();
+        const server = http.createServer(app);
+        const wss = new WebSocket.Server({
+            server
         });
 
-        server.timeout = 10000;
-        server.listen(port, ipaddress, () => {
-            console.info(`${this.app.locals.pkg["name"]} [worker ${this.app.locals.worker.id}] started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
+        let sensors = this.app.locals.sensors;
+        wss.on('connection', function(wss) {
+            console.log("Client connected!");
+
+            console.log("sensors: ");
+            console.log(sensors);
+            // TODO @lavinia: Send sensor readings to the client.
         });
 
-/*
         let realtimePort = this.config["http"]["realtime-server-port"];
         server.timeout = 10000;
         server.listen(realtimePort, ipaddress, () => {
             console.info(`${this.app.locals.pkg["name"]} [worker ${this.app.locals.worker.id}] started at ${new Date()}. IP address: ${ipaddress}, port: ${realtimePort}`);
-        }); */
-  }
+        });
+
+
+        // Sets up and starts the server responsible for the REST request handling.
+        // Running on 8080. (See config file for more details).
+        let server2 = null;
+        if (this.config["http"]["secure"]) {
+            let kf = path.join(this.config.basedir, "config", "certs",
+                this.config["http"]["key"]);
+            let cf = path.join(this.config.basedir, "config", "certs",
+                this.config["http"]["cert"]);
+            if (!fs.existsSync(kf) || !fs.existsSync(cf)) {
+                throw new Error("HTTP certificate file not found.");
+            }
+            let options = {
+                "key": fs.readFileSync(kf),
+                "cert": fs.readFileSync(cf)
+            };
+            server2 = require("https").createServer(options, this.app);
+        } else {
+            server2 = require("http").createServer(this.app);
+        }
+        server2.timeout = 10000;
+        server2.listen(port, ipaddress, () => {
+            console.info(`${this.app.locals.pkg["name"]} [worker ${this.app.locals.worker.id}] started at ${new Date()}. IP address: ${ipaddress}, port: ${port}`);
+        });
+    }
 };
