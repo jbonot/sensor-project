@@ -21,7 +21,7 @@ xhttp.onreadystatechange = function() {
         console.log(response);
         for (let key in response) {
          let sensorElement = sensors[response[key]];
-         document.getElementById(sensorElement+"-id").value = key;
+          document.getElementById(sensorElement+"-id").value = key;
           document.getElementById(sensorElement+"-name").value = response[key];
         }
     }
@@ -35,8 +35,12 @@ xhttp.send();
 
 // Sensor readings feed in realtime.
 // TODO: @lavinia fix harcoded address.
-var socket = new WebSocket("ws://localhost:8081");
-socket.onmessage=function(event) {
-    var data = JSON.parse(event.data);
-    console.log(data.message);
+let socket = new WebSocket("ws://localhost:8081");
+socket.onmessage = function(event) {
+    console.log("got a message!");
+    let message = JSON.parse(event.data);
+    console.log(message);
+    renderData();
+  //  chartstest();
+    // redraw graphs.
 };

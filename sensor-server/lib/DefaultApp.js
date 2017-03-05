@@ -103,6 +103,7 @@ module.exports = class DefaultApp {
         this.config = config;
     }
 
+
     start() {
         const fs = require("fs");
         const path = require("path");
@@ -124,14 +125,43 @@ module.exports = class DefaultApp {
             server
         });
 
+        // Sensor readings.
         let sensors = this.app.locals.sensors;
+
+        let getSensorResponse = function(sensors) {
+          let sensorsResponse = new Object();
+
+          for (let [id, sensor] of sensors.entries()) {
+            sensorsResponse[id] = sensor.reading.dummyValue;
+          }
+          return sensorsResponse;
+        };
+
         wss.on('connection', function(wss) {
             console.log("Client connected!");
 
-            console.log("sensors: ");
-            console.log(sensors);
+            setInterval(function(){
+              let readings = getSensorResponse(sensors);
+              console.log(readings);
+              wss.send(JSON.stringify(readings));
+              console.log("sent readings");
+             }, 3000);
+
+            /*
+            while (true) {
+                let readings = getSensorResponse(sensors);
+                console.log(readings);
+                wss.send(JSON.stringify(readings));
+                console.log("sent readings");
+            } */
+
             // TODO @lavinia: Send sensor readings to the client.
         });
+
+      /*  wss.onmessage = function (event) {
+          console.log("got a message!");
+          console.log(event.data);
+        }; */
 
         let realtimePort = this.config["http"]["realtime-server-port"];
         server.timeout = 10000;
