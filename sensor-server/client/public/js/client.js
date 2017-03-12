@@ -1,7 +1,5 @@
 "use strict";
 
-// var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-
 console.log("this is public/js/client.js");
 var xhttp = new XMLHttpRequest();
 // Fill in the dashboard based on the response.
@@ -15,8 +13,6 @@ let sensors = {
 
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
-        console.log("ready!");
-        console.log("response type: " + this.responseType);
         let response = JSON.parse(this.response);
         console.log(response);
         for (let key in response) {
@@ -37,10 +33,9 @@ xhttp.send();
 // TODO: @lavinia fix harcoded address.
 let socket = new WebSocket("ws://localhost:8081");
 socket.onmessage = function(event) {
-    console.log("got a message!");
     let message = JSON.parse(event.data);
-    console.log(message);
-    renderData();
-  //  chartstest();
-    // redraw graphs.
+    for (let key in message) {
+     let sensorElement = sensors[message[key]._name];
+     renderData(sensorElement+"-chart", message[key]);
+    }
 };

@@ -1,29 +1,38 @@
 "use strict";
 
-let data = null;
+let data = new Map();
+let tables = new Map();
+let ids = ['humidity-chart', 'temperature-chart', 'sound-chart', 'light-chart'];
 
 let drawChart = function() {
     // Define the chart to be drawn.
-    data = new google.visualization.DataTable();
-    // google.visualization.drawChart({"refreshInterval:" 5});
-
-    data.addColumn('datetime', 'Time');
-    data.addColumn('number', 'Temp');
-    data.addColumn('number', 'Wind Speed MPH');
-
-    // Instantiate and draw the chart.
-    var chart = new google.visualization.LineChart(document.getElementById('myPieChart'));
-    chart.draw(data, null);
+    for (var i=0; i<ids.length; i++) {
+      let id = ids[i];
+      let entry = new google.visualization.DataTable();
+      entry.addColumn('number', 'Timestamp');
+      entry.addColumn('number', 'value');
+      var chart = new google.visualization.LineChart(document.getElementById(ids[i]));
+      chart.draw(entry, null);
+      data.set(ids[i], entry);
+    }
 }
 
-let renderData = function( /* serverResponse*/ ) {
+/**
+ * @param {string} elementId The id of the chart div section in the html page.
+ * @param {Object} reading A sensor reading.
+ */
+let renderData = function(elementId, reading) {
     if (data) {
-      console.log("Adding data to chart!");
-      // TODO @lavinia: Render the actual response that is coming from the server.
-      data.addRow([new Date(Date.now()), Math.random(), Math.random()]);
-      console.log("done!");
+      let row = data.get(elementId);
+      row.addRow([reading._timestamp, reading._dummyValue]);
+      data.set(elementId, row);
     }
-
+    for (var i=0; i<ids.length; i++) {
+      let id = ids[i];
+      var options = {'title' : 'Sensor reading'};
+      var chart = new google.visualization.LineChart(document.getElementById(id));
+      chart.draw(data.get(id), options);
+    }
 }
 
 google.charts.load('current', {

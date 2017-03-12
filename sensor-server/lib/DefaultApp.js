@@ -132,7 +132,7 @@ module.exports = class DefaultApp {
           let sensorsResponse = new Object();
 
           for (let [id, sensor] of sensors.entries()) {
-            sensorsResponse[id] = sensor.reading.dummyValue;
+            sensorsResponse[id] = sensor.reading;
           }
           return sensorsResponse;
         };
@@ -145,23 +145,8 @@ module.exports = class DefaultApp {
               console.log(readings);
               wss.send(JSON.stringify(readings));
               console.log("sent readings");
-             }, 3000);
-
-            /*
-            while (true) {
-                let readings = getSensorResponse(sensors);
-                console.log(readings);
-                wss.send(JSON.stringify(readings));
-                console.log("sent readings");
-            } */
-
-            // TODO @lavinia: Send sensor readings to the client.
+            }, 1000);
         });
-
-      /*  wss.onmessage = function (event) {
-          console.log("got a message!");
-          console.log(event.data);
-        }; */
 
         let realtimePort = this.config["http"]["realtime-server-port"];
         server.timeout = 10000;
