@@ -17,7 +17,9 @@
         "mkdirp": "0.5.1",
         "morgan": "1.7.0",
         "serve-favicon": "2.3.2",
-        "uuid": "3.0.0"
+        "uuid": "3.0.0",
+        "xmlhttprequest": "1.8.0",
+        "ws": "2.2.0"
     },
     "devDependencies": {
         "mocha": "*"
