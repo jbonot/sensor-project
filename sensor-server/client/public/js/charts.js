@@ -2,7 +2,7 @@
 
 let data = new Map();
 let tables = new Map();
-let ids = ['humidity-chart', 'temperature-chart', 'sound-chart', 'light-chart'];
+let ids = ['humidity-chart', 'temperature-chart', 'sound-chart', 'light-chart', 'acceleration-chart'];
 
 let drawChart = function() {
     // Define the chart to be drawn.
