@@ -67,10 +67,6 @@ module.exports = class Sensors
         let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
 
-        let sensorResponse = {
-          id: sensor.id,
-          reading: sensor.reading
-        }
         switch (request.method)
         {
             case "GET":
@@ -78,7 +74,28 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
+                      let sensorResponse = {
+                        id: sensor.id,
+                        reading: sensor.reading
+                      }
                         response.status(200).type("application/json").send(sensorResponse);
+                    },
+                    "default": () => { next(new httpError.NotAcceptable()); }
+                });
+                break;
+            case "POST":
+                // Register a new sensor
+                response.format(
+                {
+                    "application/json": () =>
+                    {
+                        let sensor = new DummySensor(request.params.id, {chart: 'acceleration-chart'});
+                        sensor.name = request.params.name;
+                        sensors.set(sensor.id, sensor);
+                        response.status(200).type("application/json").send({
+                          id: sensor.id,
+                          name: sensor.name
+                        });
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
@@ -88,7 +105,6 @@ module.exports = class Sensors
             case "CONNECT":
             case "HEAD":
             case "OPTIONS":
-            case "POST":
             case "TRACE":
             default:
                 response.set("allow", "GET, POST");
@@ -102,10 +118,7 @@ module.exports = class Sensors
         let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
 
-        let sensorResponse = {
-          id: sensor.id,
-          reading: sensor.reading.dummyValue
-        }
+
         switch (request.method)
         {
             case "GET":
@@ -113,6 +126,10 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
+                        let sensorResponse = {
+                          id: sensor.id,
+                          reading: sensor.reading.dummyValue
+                        }
                         let latest = new Array();
                         latest.push(sensorResponse.reading);
                         response.status(200).type("application/json").send({"latest-value": latest});
@@ -120,8 +137,19 @@ module.exports = class Sensors
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
                 break;
-            case "DELETE":
             case "PUT":
+                // Received the latest value of a sensor
+                response.format(
+                {
+                    "application/json": () =>
+                    {
+                        // TODO: Chart new data
+                        response.status(200).type("application/json").send({});
+                    },
+                    "default": () => { next(new httpError.NotAcceptable()); }
+                });
+            break;
+            case "DELETE":
             case "CONNECT":
             case "HEAD":
             case "OPTIONS":
