@@ -3,7 +3,7 @@
         "port": 8080,
         "realtime-server-port": 8081,
         "ipaddress": "0.0.0.0",
-        "secure": true,
+        "secure": false,
         "key": "localhost.key",
         "cert": "localhost.cert"
     }
