@@ -4,26 +4,22 @@ const Sensor = require('generic-sensor-api').Sensor;
 const DummySensorReading = require('./DummySensorReading');
 
 module.exports = class DummySensor extends Sensor {
-
   constructor(sensorOptions) {
     super(sensorOptions);
     this._intervalHandle = null;
   }
-
   set name(value) {
     this._name = value;
   }
   get name() {
     return this._name;
   }
-
-  set startValue(value) {
-    this._startValue = value;
+  set location(value) {
+    this._location = value;
   }
-  get startValue() {
-    return this._startValue;
+  get location() {
+    return this._location;
   }
-
   set formula(value) {
     this._formula = value;
   }

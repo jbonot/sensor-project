@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = class DefaultApp {
-    constructor(worker, pkg, config) {
+    constructor(worker, pkg, config, sconfig) {
         const compress = require("compression");
         const ejs = require("ejs");
         const express = require("express");
@@ -145,7 +145,7 @@ module.exports = class DefaultApp {
               console.log(readings);
               wss.send(JSON.stringify(readings));
               console.log("sent readings");
-            }, 1000);
+            }, 10000);
         });
 
         let realtimePort = this.config["http"]["realtime-server-port"];

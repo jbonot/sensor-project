@@ -1,18 +1,26 @@
 {
     "humidity": {
+        "id": "3867-f9-71d2-b1ce-61-fc83",
         "name": "Humidity Sensor",
-        "id": "3867-f9-71d2-b1ce-61-fc83"
+        "type": "humidity",
+        "location": "In the backyard"
     },
     "temperature": {
+        "id": "0d84-35-4e04-8ed4-ce-3131",
         "name": "Temperature Sensor",
-        "id": "0d84-35-4e04-8ed4-ce-3131"
+        "type": "temperature",
+        "location": "On the fridge"
     },
     "light": {
+        "id": "cf35-f5-8663-60a5-69-5535",
         "name": "Ambient Light Sensor",
-        "id": "cf35-f5-8663-60a5-69-5535"
+        "type": "light",
+        "location": "In the living room"
     },
     "sound": {
+        "id": "bca4-89-445a-81e5-87-f7af",
         "name": "Sound Intensity Sensor",
-        "id": "bca4-89-445a-81e5-87-f7af"
+        "type": "sound",
+        "location": "In the basement"
     }
 }

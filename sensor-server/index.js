@@ -3,6 +3,7 @@
 const cluster = require("cluster");
 const cpus = require("os").cpus().length;
 const path = require("path");
+const sconfig = require(path.join(__dirname, "config", "sensors.json"));
 const config = require(path.join(__dirname, "config", "start.json"));
 const pkg = require(path.join(__dirname, "package.json"));
 const debug = require("util").debuglog(pkg.name);
@@ -66,11 +67,15 @@ process.on("uncaughtException", function (error)
 function launcher(worker, pkg, config)
 {
     const createSensors = require("./lib/ServerSensors");
-    let sensors = createSensors();
+    let sensors = createSensors(sconfig);
     // console.log(serverSensors);
     config.sensors = sensors;
+    /*
+      Array
+          .from(config.sensors.entries())
+          .forEach(entry => entry[1].start()); */
 
-    const app = new (require("./lib/DefaultApp"))(worker, pkg, config);
+    const app = new (require("./lib/DefaultApp"))(worker, pkg, config, sconfig);
     worker.process.title = `${pkg.name}:${worker.id}`;
     app.start();
 };
