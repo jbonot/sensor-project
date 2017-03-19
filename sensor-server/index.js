@@ -70,10 +70,10 @@ function launcher(worker, pkg, config)
     let sensors = createSensors(sconfig);
     // console.log(serverSensors);
     config.sensors = sensors;
-    /*
-      Array
-          .from(config.sensors.entries())
-          .forEach(entry => entry[1].start()); */
+
+    Array
+        .from(config.sensors.entries())
+        .forEach(entry => entry[1].start());
 
     const app = new (require("./lib/DefaultApp"))(worker, pkg, config, sconfig);
     worker.process.title = `${pkg.name}:${worker.id}`;

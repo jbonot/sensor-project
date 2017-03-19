@@ -145,7 +145,7 @@ module.exports = class DefaultApp {
               console.log(readings);
               wss.send(JSON.stringify(readings));
               console.log("sent readings");
-            }, 10000);
+            }, 1000);
         });
 
         let realtimePort = this.config["http"]["realtime-server-port"];

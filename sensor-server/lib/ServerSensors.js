@@ -16,6 +16,8 @@ let parseFromJson = function(sensorJson, formula) {
   sensor._type = sensorJson["type"];
   sensor._location = sensorJson["location"];
   sensor._formula = formula;
+
+
   return sensor;
 }
 
@@ -25,11 +27,6 @@ let parseFromJson = function(sensorJson, formula) {
  * @return {Map<string, DummySensor>}
 */
 module.exports = function createSensors(sconfig) {
-  console.log("Creating sensors!");
-
-  // Accessing members of this guy: config["http"]["ipaddress"];
-
-  console.log(sconfig["humidity"]["type"]);
   let entries = new Array(sconfig["humidity"], sconfig["temperature"],
     sconfig["light"], sconfig["sound"]);
 
@@ -50,10 +47,9 @@ module.exports = function createSensors(sconfig) {
 
   let sensors = new Map();
   for(let i=0; i<4; i++) {
-
-  //  sensor.onchange = event => sensor.reading = event.reading;
     // sensor.name = entries[i];
 
+  // sensor.onchange = event => sensor.reading = event.reading;
     sensors.set(entries[i]["id"], parseFromJson(entries[i], formulas[i]));
   }
 
