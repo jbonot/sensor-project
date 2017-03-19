@@ -4,6 +4,7 @@ const uuid = require("uuid");
 const httpError = require("http-errors");
 const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
+const DummySensorReading = require("dummy-sensor").DummySensorReading;
 
 
 
@@ -118,7 +119,6 @@ module.exports = class Sensors
         let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
 
-
         switch (request.method)
         {
             case "GET":
@@ -143,7 +143,10 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-                        // TODO: Chart new data
+                        sensor.reading = new DummySensorReading(
+                          sensor.name,
+                          parseInt(request.params.timestamp),
+                          parseFloat(request.params.value));
                         response.status(200).type("application/json").send({});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
