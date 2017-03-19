@@ -17,9 +17,9 @@ xhttp.onreadystatechange = function() {
         let response = JSON.parse(this.response);
         console.log(response);
         for (let key in response) {
-         let sensorElement = sensors[response[key]];
-          document.getElementById(sensorElement+"-id").value = key;
-          document.getElementById(sensorElement+"-name").value = response[key];
+         let sensorElement = sensors[response[key].name];
+          document.getElementById(sensorElement+"-id").value = response[key].id;
+          document.getElementById(sensorElement+"-name").value = response[key].name;
         }
     }
 };
@@ -29,12 +29,14 @@ xhttp.send();
 
 
 
-// Sensor readings feed in realtime.
+// Dummy sensor readings feed in realtime.
 let socket = new WebSocket("ws://localhost:8081");
 socket.onmessage = function(event) {
     let message = JSON.parse(event.data);
     for (let key in message) {
      let sensorElement = sensors[message[key]._name];
-     renderData(sensorElement+"-chart", message[key]);
+     if (sensorElement != "acceleration") {
+       renderData(sensorElement+"-chart", message[key]);
+     }
     }
 };

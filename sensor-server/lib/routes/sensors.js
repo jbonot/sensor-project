@@ -18,13 +18,23 @@ const DummySensorReading = require("dummy-sensor").DummySensorReading;
   .from(sensors.keys())
   .map(id => ({id: id})); */
 
-
+/**
+* @param {Map<string, DummySensor>} sensors
+* @return {JSON}
+*/
 
 function getSensorResponse(sensors) {
   let sensorsResponse = new Object();
+  let index = 0;
 
   for (let [id, sensor] of sensors.entries()) {
-    sensorsResponse[id] = sensor.name;
+    index++;
+    let entry = new Object();
+    entry["id"] = sensor.id;
+    entry["name"] = sensor.name;
+    entry["location"] = sensor.location;
+    entry["type"] = sensor.type;
+    sensorsResponse[index] = entry;
   }
   return sensorsResponse;
 }
@@ -133,6 +143,7 @@ module.exports = class Sensors
                           parseInt(request.params.timestamp),
                           parseFloat(request.params.value));
                         response.status(200).type("application/json").send({});
+                        sensors.set(sensor.id,sensor);
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });

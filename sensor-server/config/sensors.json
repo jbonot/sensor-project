@@ -25,7 +25,7 @@
     },
     "acceleration": {
         "id": "HT23KW404505",
-        "name": "Accerelation Sensor",
+        "name": "Acceleration Sensor",
         "type": "acceleration",
         "location": "Outside"
     }

@@ -27,7 +27,7 @@ let parseFromJson = function(sensorJson, formula) {
 */
 module.exports = function createSensors(sconfig) {
   let entries = new Array(sconfig["humidity"], sconfig["temperature"],
-    sconfig["light"], sconfig["sound"]);
+    sconfig["light"], sconfig["sound"], sconfig["acceleration"]);
 
   let humidityFormula = function() {
     return (Math.random() * 25) % 100;
@@ -41,11 +41,16 @@ module.exports = function createSensors(sconfig) {
   let soundFormula = function() {
     return ((Math.random() * 100) % (85 - 60 + 1) + 60);
   };
-  let formulas = new Array(humidityFormula, temperatureFormula, lightFormula, soundFormula);
+  let accFormula = function() {
+    return 0;
+  };
+
+  let formulas = new Array(humidityFormula, temperatureFormula, lightFormula,
+     soundFormula, accFormula);
 
 
   let sensors = new Map();
-  for(let i=0; i<4; i++) {
+  for(let i=0; i<5; i++) {
     sensors.set(entries[i]["id"], parseFromJson(entries[i], formulas[i]));
   }
 
