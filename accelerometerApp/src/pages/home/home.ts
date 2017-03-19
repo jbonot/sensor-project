@@ -33,7 +33,7 @@ export class HomePage {
   }
 
   /**
-    * Enables or disables reading and sending of accerlerometer data. 
+    * Enables or disables reading and sending of accerlerometer data.
     *
     * Triggered when the toggle is switched.
     */
@@ -49,7 +49,7 @@ export class HomePage {
       this.subscription = DeviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
         (acceleration: DeviceMotionAccelerationData) => {
           this.value = acceleration.x.toString();
-          this.accService.sendReading(this.value);
+          this.accService.sendReading(this.value, acceleration.timestamp.toString());
         });
     } else {
       // Stop reading and sending acceleration information.
