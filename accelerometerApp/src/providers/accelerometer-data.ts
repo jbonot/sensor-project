@@ -10,18 +10,19 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class AccelerometerData {
+  baseUrl: string;
 
   constructor(public http: Http) {
   }
 
   registerSensor(id: number, name: string) {
-    this.http.post('http://192.168.0.13:8080/api/sensors/register/' + id + '/' + name, {}).subscribe(data => {
+    this.http.post(this.baseUrl + '/api/sensors/register/' + id + '/' + name, {}).subscribe(data => {
       console.log(data);
     });
   }
 
   sendReading(id: string, value: string) {
-    this.http.put('http://192.168.0.13:8080/api/sensors/' + id + '/reading/' + value, {}).subscribe(data => {
+    this.http.put(this.baseUrl + '/api/sensors/' + id + '/reading/' + value, {}).subscribe(data => {
       console.log(data);
     });
   }

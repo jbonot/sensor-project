@@ -15,6 +15,7 @@ export class HomePage {
   private name: string = 'Accelerometer App';
   private registered: boolean = false;
 
+  server: string = 'http://';
   value: string;
   toggle: boolean = false;
 
@@ -22,11 +23,16 @@ export class HomePage {
 
   }
 
-  ionViewDidLoad() {
-    this.accService.registerSensor(12345, this.name);
+  updateBaseUrl() {
+    this.accService.baseUrl = this.server;
   }
 
   toggleRead() {
+    if (!this.registered) {
+      this.accService.registerSensor(12345, this.name);
+      this.registered = true;
+    }
+
     if (this.toggle) {
       this.subscription = DeviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
         (acceleration: DeviceMotionAccelerationData) => {

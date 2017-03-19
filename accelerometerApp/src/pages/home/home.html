@@ -8,6 +8,10 @@
 
 <ion-content padding>
   <ion-item>
+    <ion-label>Server URL</ion-label>
+    <ion-input (blur)="updateBaseUrl()" [(ngModel)]="server" [readonly]="toggle"></ion-input>
+  </ion-item>
+  <ion-item>
     <ion-label>Read accelerometer</ion-label>
     <ion-toggle (ionChange)="toggleRead()" [(ngModel)]="toggle" checked="false"></ion-toggle>
   </ion-item>
