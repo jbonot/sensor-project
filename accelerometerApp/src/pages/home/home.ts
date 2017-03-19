@@ -40,7 +40,7 @@ export class HomePage {
   toggleRead() {
     if (!this.registered) {
       // Tell the server that this sensor exists.
-      this.accService.registerSensor(12345, this.name);
+      this.accService.registerSensor( this.name);
       this.registered = true;
     }
 
@@ -49,7 +49,7 @@ export class HomePage {
       this.subscription = DeviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
         (acceleration: DeviceMotionAccelerationData) => {
           this.value = acceleration.x.toString();
-          this.accService.sendReading('1234500-12345000', this.value);
+          this.accService.sendReading(this.value);
         });
     } else {
       // Stop reading and sending acceleration information.
