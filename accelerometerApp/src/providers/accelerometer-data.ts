@@ -11,7 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class AccelerometerData {
-  private id: string = Device.serial;
+  id: string = Device.serial;
   baseUrl: string;
 
   constructor(public http: Http) {
