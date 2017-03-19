@@ -12,7 +12,7 @@ import { AccelerometerData } from '../../providers/accelerometer-data';
 
 export class HomePage {
   private subscription: Subscription;
-  private name: string = 'Accelerometer App';
+  private name: string = 'Acceleration Sensor';
   private registered: boolean = false;
 
   server: string = 'http://';
@@ -40,7 +40,7 @@ export class HomePage {
   toggleRead() {
     if (!this.registered) {
       // Tell the server that this sensor exists.
-      this.accService.registerSensor( this.name);
+      this.accService.registerSensor(this.name);
       this.registered = true;
     }
 
