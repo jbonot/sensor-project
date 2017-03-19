@@ -30,6 +30,7 @@ export class HomePage {
    */
   updateBaseUrl() {
     this.accService.baseUrl = this.server;
+    this.registered = false;
   }
 
   /**
