@@ -24,7 +24,7 @@ xhttp.onreadystatechange = function() {
 };
 
 // TODO: @lavinia don't hardcode the url. Fix this.
-xhttp.open("GET", "https://localhost:8080/api/sensors", true);
+xhttp.open("GET", "http://localhost:8080/api/sensors", true);
 xhttp.send();
 
 
