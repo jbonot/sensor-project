@@ -143,7 +143,6 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-                        // TODO: Chart new data
                         response.status(200).type("application/json").send({});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }

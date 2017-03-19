@@ -17,7 +17,6 @@ let parseFromJson = function(sensorJson, formula) {
   sensor._location = sensorJson["location"];
   sensor._formula = formula;
 
-
   return sensor;
 }
 
@@ -34,22 +33,19 @@ module.exports = function createSensors(sconfig) {
     return (Math.random() * 25) % 100;
   };
   let temperatureFormula = function() {
-    return (Math.random() * 25) % 100;
+    return ((Math.random() * 100) % (25 - 14 + 1) + 14);
   };
   let lightFormula = function() {
-    return (Math.random() * 25) % 100;
+    return ((Math.random() * 100) % (500 - 320 + 1) + 320);
   };
   let soundFormula = function() {
-    return (Math.random() * 25) % 100;
+    return ((Math.random() * 100) % (85 - 60 + 1) + 60);
   };
   let formulas = new Array(humidityFormula, temperatureFormula, lightFormula, soundFormula);
 
 
   let sensors = new Map();
   for(let i=0; i<4; i++) {
-    // sensor.name = entries[i];
-
-  // sensor.onchange = event => sensor.reading = event.reading;
     sensors.set(entries[i]["id"], parseFromJson(entries[i], formulas[i]));
   }
 

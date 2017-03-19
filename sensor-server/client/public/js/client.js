@@ -8,7 +8,7 @@ let sensors = {
   "Humidity Sensor": "humidity",
   "Temperature Sensor": "temperature",
   "Ambient Light Sensor": "light",
-  "Sound Intensity Sensor": "sound"
+  "Sound Intensity Sensor": "sound",
 }
 
 xhttp.onreadystatechange = function() {
@@ -23,14 +23,12 @@ xhttp.onreadystatechange = function() {
     }
 };
 
-// TODO: @lavinia don't hardcode the url. Fix this.
 xhttp.open("GET", "http://localhost:8080/api/sensors", true);
 xhttp.send();
 
 
 
 // Sensor readings feed in realtime.
-// TODO: @lavinia fix harcoded address.
 let socket = new WebSocket("ws://localhost:8081");
 socket.onmessage = function(event) {
     let message = JSON.parse(event.data);
