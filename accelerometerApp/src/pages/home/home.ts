@@ -12,8 +12,6 @@ import { AccelerometerData } from '../../providers/accelerometer-data';
 
 export class HomePage {
   private subscription: Subscription;
-  private name: string = 'Accelerometer App';
-  private registered: boolean = false;
 
   server: string = 'http://';
   value: string;
@@ -33,23 +31,17 @@ export class HomePage {
   }
 
   /**
-    * Enables or disables reading and sending of accerlerometer data. 
+    * Enables or disables reading and sending of accerlerometer data.
     *
     * Triggered when the toggle is switched.
     */
   toggleRead() {
-    if (!this.registered) {
-      // Tell the server that this sensor exists.
-      this.accService.registerSensor( this.name);
-      this.registered = true;
-    }
-
     if (this.toggle) {
       // Start reading acceleration values, and send this information to the server.
       this.subscription = DeviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
         (acceleration: DeviceMotionAccelerationData) => {
           this.value = acceleration.x.toString();
-          this.accService.sendReading(this.value);
+          this.accService.sendReading(this.value, acceleration.timestamp.toString());
         });
     } else {
       // Stop reading and sending acceleration information.

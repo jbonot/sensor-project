@@ -22,9 +22,7 @@ module.exports = class APIRouter extends require("express").Router
             parser.json({ "inflate": true, "strict": true }), Sensors.sensor);
         this.all("/sensors", DefaultRouter.xPoweredBy,
             parser.json({ "inflate": true, "strict": true }), Sensors.sensors);
-        this.all("/sensors/register/:id/:name", DefaultRouter.xPoweredBy,
-            parser.json({ "inflate": true, "strict": true }), Sensors.sensor);
-        this.all("/sensors/:sensor/reading/:value", DefaultRouter.xPoweredBy,
+        this.all("/sensors/:sensor/reading/:value/:timestamp", DefaultRouter.xPoweredBy,
             parser.json({ "inflate": true, "strict": true }), Sensors.latestReading);
 
         /* ===== 404 Error handling ===== */

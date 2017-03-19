@@ -22,5 +22,11 @@
         "name": "Sound Intensity Sensor",
         "type": "sound",
         "location": "In the basement"
+    },
+    "acceleration": {
+        "id": "HT23KW404505",
+        "name": "Accerelation Sensor",
+        "type": "acceleration",
+        "location": "Outside"
     }
 }

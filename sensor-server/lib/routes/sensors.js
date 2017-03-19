@@ -4,6 +4,7 @@ const uuid = require("uuid");
 const httpError = require("http-errors");
 const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
+const DummySensorReading = require("dummy-sensor").DummySensorReading;
 
 
 
@@ -84,22 +85,6 @@ module.exports = class Sensors
                 });
                 break;
             case "POST":
-                // Register a new sensor
-                response.format(
-                {
-                    "application/json": () =>
-                    {
-                        let sensor = new DummySensor(request.params.id, {chart: 'acceleration-chart'});
-                        sensor.name = request.params.name;
-                        sensors.set(sensor.id, sensor);
-                        response.status(200).type("application/json").send({
-                          id: sensor.id,
-                          name: sensor.name
-                        });
-                    },
-                    "default": () => { next(new httpError.NotAcceptable()); }
-                });
-                break;
             case "DELETE":
             case "PUT":
             case "CONNECT":
@@ -117,7 +102,6 @@ module.exports = class Sensors
     {
         let sensors = request.app.locals.sensors;
         let sensor = sensors.get(request.params.sensor);
-
 
         switch (request.method)
         {
@@ -143,6 +127,11 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
+
+                        sensor.reading = new DummySensorReading(
+                          sensor.name,
+                          parseInt(request.params.timestamp),
+                          parseFloat(request.params.value));
                         response.status(200).type("application/json").send({});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }

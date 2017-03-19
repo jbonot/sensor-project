@@ -9,6 +9,7 @@ let sensors = {
   "Temperature Sensor": "temperature",
   "Ambient Light Sensor": "light",
   "Sound Intensity Sensor": "sound",
+  "Acceleration Sensor": "acceleration"
 }
 
 xhttp.onreadystatechange = function() {
