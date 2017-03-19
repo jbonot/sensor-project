@@ -2,6 +2,7 @@
 
 console.log("this is public/js/client.js");
 var xhttp = new XMLHttpRequest();
+var acSensorId = "HT23KW404505";
 // Fill in the dashboard based on the response.
 
 let sensors = {
@@ -16,10 +17,19 @@ xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         let response = JSON.parse(this.response);
         console.log(response);
-        for (let key in response) {
-         let sensorElement = sensors[response[key].name];
-          document.getElementById(sensorElement+"-id").value = response[key].id;
-          document.getElementById(sensorElement+"-name").value = response[key].name;
+        if (response["latest-value"] == undefined) {
+          for (let key in response) {
+           let sensorElement = sensors[response[key].name];
+           if (sensorElement == "acceleration") {
+             acSensorId = response[key].id;
+           }
+            document.getElementById(sensorElement+"-id").value = response[key].id;
+            document.getElementById(sensorElement+"-name").value = response[key].name;
+            document.getElementById(sensorElement+"-location").value = response[key].location;
+          }
+        }  else {
+           console.log(response["latest-value"]);
+           renderData("acceleration-chart", response["latest-value"]);
         }
     }
 };
@@ -40,3 +50,9 @@ socket.onmessage = function(event) {
      }
     }
 };
+
+setInterval(function(){
+  xhttp.open("GET", "http://localhost:8080/api/sensors/" + acSensorId +
+  "/sensorReadings/latest", true);
+  xhttp.send();
+}, 1000);

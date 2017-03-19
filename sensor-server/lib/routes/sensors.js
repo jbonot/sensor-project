@@ -119,14 +119,14 @@ module.exports = class Sensors
                 response.format(
                 {
                     "application/json": () =>
-                    {
+                    { /*
                         let sensorResponse = {
                           id: sensor.id,
                           reading: sensor.reading.dummyValue
-                        }
+                        } */
                         let latest = new Array();
-                        latest.push(sensorResponse.reading);
-                        response.status(200).type("application/json").send({"latest-value": latest});
+                        latest.push(sensor.reading);
+                        response.status(200).type("application/json").send({"latest-value": latest[0]});
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
@@ -137,13 +137,14 @@ module.exports = class Sensors
                 {
                     "application/json": () =>
                     {
-
                         sensor.reading = new DummySensorReading(
                           sensor.name,
                           parseInt(request.params.timestamp),
-                          parseFloat(request.params.value));
+                          parseFloat(request.params.value)
+                        );
                         response.status(200).type("application/json").send({});
-                        sensors.set(sensor.id,sensor);
+                        request.app.locals.sensors.set(request.params.sensor, sensor);
+                        console.log("putting sensor!");
                     },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
