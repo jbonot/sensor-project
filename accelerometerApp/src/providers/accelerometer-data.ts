@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Device } from 'ionic-native';
 import 'rxjs/add/operator/map';
 
 /*
@@ -10,6 +11,7 @@ import 'rxjs/add/operator/map';
 */
 @Injectable()
 export class AccelerometerData {
+  private id: string = Device.serial;
   baseUrl: string;
 
   constructor(public http: Http) {
@@ -18,8 +20,8 @@ export class AccelerometerData {
   /**
     * Informs the server that this sensor exists.
     */
-  registerSensor(id: number, name: string) {
-    this.http.post(this.baseUrl + '/api/sensors/register/' + id + '/' + name, {}).subscribe(data => {
+  registerSensor(name: string) {
+    this.http.post(this.baseUrl + '/api/sensors/register/' + this.id + '/' + name, {}).subscribe(data => {
       console.log(data);
     });
   }
@@ -27,8 +29,8 @@ export class AccelerometerData {
   /**
     * Sends acceleration data to the server.
     */
-  sendReading(id: string, value: string) {
-    this.http.put(this.baseUrl + '/api/sensors/' + id + '/reading/' + value, {}).subscribe(data => {
+  sendReading(value: string) {
+    this.http.put(this.baseUrl + '/api/sensors/' + this.id + '/reading/' + value, {}).subscribe(data => {
       console.log(data);
     });
   }
