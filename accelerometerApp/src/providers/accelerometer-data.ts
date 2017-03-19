@@ -18,15 +18,6 @@ export class AccelerometerData {
   }
 
   /**
-    * Informs the server that this sensor exists.
-    */
-  registerSensor(name: string) {
-    this.http.post(this.baseUrl + '/api/sensors/register/' + this.id + '/' + name, {}).subscribe(data => {
-      console.log(data);
-    });
-  }
-
-  /**
     * Sends acceleration data to the server.
     */
   sendReading(value: string, timestamp: string) {

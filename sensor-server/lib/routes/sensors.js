@@ -85,22 +85,6 @@ module.exports = class Sensors
                 });
                 break;
             case "POST":
-                // Register a new sensor
-                response.format(
-                {
-                    "application/json": () =>
-                    {
-                        let sensor = new DummySensor(request.params.id, {chart: 'acceleration-chart'});
-                        sensor.name = request.params.name;
-                        sensors.set(sensor.id, sensor);
-                        response.status(200).type("application/json").send({
-                          id: sensor.id,
-                          name: sensor.name
-                        });
-                    },
-                    "default": () => { next(new httpError.NotAcceptable()); }
-                });
-                break;
             case "DELETE":
             case "PUT":
             case "CONNECT":

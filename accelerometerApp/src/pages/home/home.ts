@@ -12,8 +12,6 @@ import { AccelerometerData } from '../../providers/accelerometer-data';
 
 export class HomePage {
   private subscription: Subscription;
-  private name: string = 'Acceleration Sensor';
-  private registered: boolean = false;
 
   server: string = 'http://';
   value: string;
@@ -30,7 +28,6 @@ export class HomePage {
    */
   updateBaseUrl() {
     this.accService.baseUrl = this.server;
-    this.registered = false;
   }
 
   /**
@@ -39,12 +36,6 @@ export class HomePage {
     * Triggered when the toggle is switched.
     */
   toggleRead() {
-    if (!this.registered) {
-      // Tell the server that this sensor exists.
-      this.accService.registerSensor(this.name);
-      this.registered = true;
-    }
-
     if (this.toggle) {
       // Start reading acceleration values, and send this information to the server.
       this.subscription = DeviceMotion.watchAcceleration({ frequency: 1000 }).subscribe(
