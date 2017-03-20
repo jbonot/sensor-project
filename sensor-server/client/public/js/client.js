@@ -16,7 +16,6 @@ let sensors = {
 xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
         let response = JSON.parse(this.response);
-        console.log(response);
         if (response["latest-value"] == undefined) {
           for (let key in response) {
            let sensorElement = sensors[response[key].name];
@@ -28,7 +27,6 @@ xhttp.onreadystatechange = function() {
             document.getElementById(sensorElement+"-location").value = response[key].location;
           }
         }  else {
-           console.log(response["latest-value"]);
            renderData("acceleration-chart", response["latest-value"]);
         }
     }

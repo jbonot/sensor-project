@@ -6,18 +6,6 @@ const http = require("http");
 const DummySensor = require("dummy-sensor").DummySensor;
 const DummySensorReading = require("dummy-sensor").DummySensorReading;
 
-
-
-// Here only reder static data about the sensors, based on the json file.
-
-// let sensors = new Map();
-
-
-
-/* let sensorsResponse = Array
-  .from(sensors.keys())
-  .map(id => ({id: id})); */
-
 /**
 * @param {Map<string, DummySensor>} sensors
 * @return {JSON}
@@ -119,11 +107,7 @@ module.exports = class Sensors
                 response.format(
                 {
                     "application/json": () =>
-                    { /*
-                        let sensorResponse = {
-                          id: sensor.id,
-                          reading: sensor.reading.dummyValue
-                        } */
+                    {
                         let latest = new Array();
                         latest.push(sensor.reading);
                         response.status(200).type("application/json").send({"latest-value": latest[0]});
@@ -143,9 +127,8 @@ module.exports = class Sensors
                           parseFloat(request.params.value)
                         );
                         response.status(200).type("application/json").send({});
-                        request.app.locals.sensors.set(request.params.sensor, sensor);
-                        console.log("putting sensor!");
-                    },
+                        request.app.locals.sensors.set(sensor.id, sensor);
+                      },
                     "default": () => { next(new httpError.NotAcceptable()); }
                 });
             break;

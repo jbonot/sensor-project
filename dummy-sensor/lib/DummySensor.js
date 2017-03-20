@@ -7,6 +7,7 @@ module.exports = class DummySensor extends Sensor {
   constructor(sensorOptions) {
     super(sensorOptions);
     this._intervalHandle = null;
+    this._isAMock = true;
   }
   set name(value) {
     this._name = value;
@@ -26,22 +27,31 @@ module.exports = class DummySensor extends Sensor {
   get formula() {
     return this._formula;
   }
+  set isAMock(value) {
+    this._isAMock = value;
+  }
+  get isAMock() {
+    return this._isAMock;
+  }
 
   handleStarted() {
     return new Promise((resolve, reject) => {
+      if (this._isAMock) {
       this._intervalHandle = setInterval(
           () => {
-                  this._reading = new DummySensorReading(
-                    this._name,
-                    Date.now(),
-                    this._formula()
-              )
+                    this._reading = new DummySensorReading(
+                      this._name,
+                      Date.now(),
+                      this._formula()
+                    )
+
               this.onchange({
                   reading: this._reading
               });
           },
           this.sensorOptions.frequency
       );
+    }
       resolve();
     });
   }

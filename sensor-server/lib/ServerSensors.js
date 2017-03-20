@@ -17,6 +17,14 @@ let parseFromJson = function(sensorJson, formula) {
   sensor._location = sensorJson["location"];
   sensor._formula = formula;
 
+  // We don't generate mock values for the acceleration sensor.
+  // The readings come from a real sensor in this case.
+  /*
+  if (sensor._type == "acceleration") {
+    sensor._isAMock = false;
+  }
+  */
+
   return sensor;
 }
 
@@ -42,7 +50,7 @@ module.exports = function createSensors(sconfig) {
     return ((Math.random() * 100) % (85 - 60 + 1) + 60);
   };
   let accFormula = function() {
-    return 0;
+    return Math.random();
   };
 
   let formulas = new Array(humidityFormula, temperatureFormula, lightFormula,

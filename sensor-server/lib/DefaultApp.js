@@ -142,9 +142,7 @@ module.exports = class DefaultApp {
 
             setInterval(function(){
               let readings = getSensorResponse(sensors);
-              console.log(readings);
               wss.send(JSON.stringify(readings));
-              console.log("sent readings");
             }, 1000);
         });
 
